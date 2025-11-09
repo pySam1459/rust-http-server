@@ -3,5 +3,26 @@
 version = 4
 
 [[package]]
-name = "rust-http-server"
+name = "bytes"
+version = "1.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d71b6127be86fdcfddb610f7182ac57211d4b18a3e9c82eb2d17662f2227ad6a"
+
+[[package]]
+name = "http_core"
 version = "0.1.0"
+
+[[package]]
+name = "memchr"
+version = "2.7.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
+
+[[package]]
+name = "sync-http-server"
+version = "0.1.0"
+dependencies = [
+ "bytes",
+ "http_core",
+ "memchr",
+]
