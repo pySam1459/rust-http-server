@@ -129,7 +129,15 @@ fn parse_start_line(start_line_raw: Option<Result<String>>) -> io::Result<StartL
 pub fn parse_request(stream: &mut TcpStream) -> Result<http_core::Request> {
     let mut reader = LineReader::new(stream);
 
-    let start_line = parse_start_line(reader.next())?;
+    let start_line_raw = reader.next();
+    if start_line_raw.is_none() {
+        return Err(io::Error::new(
+            io::ErrorKind::ConnectionAborted,
+            "Connection aborted, no bytes read from stream",
+        ));
+    }
+
+    let start_line = parse_start_line(start_line_raw)?;
 
     let headers: HashMap<String, String> = (&mut reader)
         .take_while(|line| line.as_ref().map(|s| !s.is_empty()).unwrap_or(false))
